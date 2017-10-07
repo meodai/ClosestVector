@@ -1,6 +1,6 @@
 <img align="right" height="200" width="200" src="http://svgshare.com/i/3J7.svg">
 
-# ClosestVector ∆
+# Closestᐁector
 [![Build Status](https://travis-ci.org/meodai/ClosestVector.svg?branch=master)](https://travis-ci.org/meodai/ClosestVector)
 
 Get closest Number / Vector / VectorN from an array and caches the previous get requests/responses.
