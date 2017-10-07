@@ -1,10 +1,14 @@
 {
   "name": "closestvector",
-  "version": "0.1.1",
+  "version": "0.0.0-development",
   "description": "returns the closest value / vector / vectorN from an array",
-  "main": "index.js",
+  "main": "index.umd.js",
+  "es2015": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretest": "npm run build",
+    "test": "mocha",
+    "build": "rollup --config",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
@@ -19,10 +23,24 @@
     "diff",
     "difference"
   ],
-  "author": "meodai@gmail.com",
+  "author": "meodai",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/meodai/ClosestVector/issues"
   },
-  "homepage": "https://github.com/meodai/ClosestVector#readme"
+  "homepage": "https://github.com/meodai/ClosestVector#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-latest": "^6.24.1",
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "rollup": "^0.50.0",
+    "rollup-plugin-babel": "^3.0.2",
+    "semantic-release": "^8.0.3"
+  },
+  "standard": {
+    "env": {
+      "mocha": true
+    }
+  }
 }
