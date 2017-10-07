@@ -1,4 +1,4 @@
-# ClosestVector
+# ClosestVector 🕋 
 returns the closest value / vector / vectorN from an array
 caches the previous get requests
 
