@@ -41,7 +41,15 @@ closestNumber.get(1) // => {closest: 3, closestIndex: 1, distance: 2}
 
 ## Closest Vector3 or RGB Color 
 ```javascript
-const closestColor = new Closest([[255,255,255],[0,0,0],[255,0,0],[0,255,0],[0,0,255],[0,255,255],[255,255,0]]);
+const closestColor = new Closest([
+  [255,255,255],
+  [0,0,0],
+  [255,0,0],
+  [0,255,0],
+  [0,0,255],
+  [0,255,255],
+  [255,255,0]
+]);
 closestColor.get([0,192,200]) // => {"closest":[0,255,255],"closestIndex":5,"distance":83.6301381082203}
 ```
 
