@@ -1,6 +1,6 @@
 {
   "name": "closestvector",
-  "version": "0.0.0-development",
+  "version": "0.2.0",
   "description": "returns the closest value / vector / vectorN from an array",
   "main": "index.umd.js",
   "es2015": "index.js",
