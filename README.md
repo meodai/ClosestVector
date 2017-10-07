@@ -1,3 +1,5 @@
+<img align="right" height="222" width="222" src="logo.svg">
+
 # ClosestVector 
 [![Build Status](https://travis-ci.org/meodai/ClosestVector.svg?branch=master)](https://travis-ci.org/meodai/ClosestVector)
 
