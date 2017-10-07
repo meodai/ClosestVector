@@ -1,4 +1,4 @@
-# ClosestVector 🕋 
+# ClosestVector 
 [![Build Status](https://travis-ci.org/meodai/ClosestVector.svg?branch=master)](https://travis-ci.org/meodai/ClosestVector)
 
 Get closest Number / Vector / VectorN from an array and caches the previous get requests/responses.
