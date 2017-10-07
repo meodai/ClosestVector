@@ -38,3 +38,16 @@ closestNumber.get(100) // => {closest: 120, closestIndex: 5, distance: 20}
 closestNumber.get(100000) // => {closest: 120, closestIndex: 5, distance: 99880}
 closestNumber.get(1) // => {closest: 3, closestIndex: 1, distance: 2}
 ```
+
+## How it works
+
+From [the Wikipedia article on the subject](http://en.wikipedia.org/wiki/Nearest_neighbor_search):
+> The simplest solution to the NNS problem is to compute the distance from the query point 
+> to every other point in the database, keeping track of the "best so far". This algorithm, 
+> sometimes referred to as the naive approach, has a running time of *O(Nd)* where *N* is 
+> the cardinality of *S* and *d* is the dimensionality of *M*. There are no search data 
+> structures to maintain, so linear search has no space complexity beyond the storage of the 
+> database. Naive search can, on average, outperform space partitioning approaches on higher 
+> dimensional spaces.
+
+ClosestColors uses the naive approach and caches the requests made, so the diffing only happens, if the vector is requested for the first time.
