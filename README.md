@@ -9,14 +9,30 @@ Get closest Number / Vector / VectorN from an array and caches the previous get 
 `npm install closestvector --save` or `yarn add closestvector`
 
 ## Usage
+```javascript
+const Closest = require('closestvector');
+const closest = new Closest([[255,0,0], [0,255,0], [0,0,255], [0,0,0]]);
+closest.get([200,130,213]) // => [255,0,0]
+```
+
+**if you wish to return every value only once:**
+```javascript
+const closest = new Closest([[255,0,0], [0,255,0], [0,0,255], [0,0,0]], true);
+closest.get([200,130,213]) // => [255,0,0] closest Vector
+closest.get([200,130,213]) // => [0,0,255] next closest Vector
+closest.clearCache() // resets the returned elements
+closest.get([200,130,213]) // => [255,0,0] closest Vector
+``` 
+
+## Examples
 ### Closest Vector2 
 ```javascript
 const Closest = require('closestvector');
 const closestVector = new Closest([[1,2],[222,6],[222,5],[222,4]]);
 
-closestVector.get([255,255]) // => {"closest":[222,6],"closestIndex":1,"distance":251.17722826721374}
-closestVector.get([2,5]) // => {"closest":[1,2],"closestIndex":0,"distance":3.1622776601683795}
-closestVector.get([64,12]) // => {"closest":[1,2],"closestIndex":0,"distance":63.788713735268246}
+closestVector.get([255,255]) // => {"closest":[222,6],"index":1,"distance":251.17722826721374}
+closestVector.get([2,5]) // => {"closest":[1,2],"index":0,"distance":3.1622776601683795}
+closestVector.get([64,12]) // => {"closest":[1,2],"index":0,"distance":63.788713735268246}
 ```
 
 ### Unique closest Vector2
@@ -26,13 +42,13 @@ every vector can be retruned only once
 const Closest = require('closestvector');
 const closestUniqueVector = new Closest([[1,2],[222,6],[222,5],[222,4]], true);
 
-closestUniqueVector.get([255,255]) // => {"closest":[222,6],"closestIndex":1,"distance":251.17722826721374}
-closestUniqueVector.get([255,255]) // => {"closest":[222,5],"closestIndex":2,"distance":252.16859439668534}
-closestUniqueVector.get([255,255]) // => {"closest":[222,4],"closestIndex":3,"distance":253.16002844051033}
-closestUniqueVector.get([255,255]) // => {"closest":[1,2],"closestIndex":0,"distance":358.50383540486706}
+closestUniqueVector.get([255,255]) // => {"closest":[222,6],"index":1,"distance":251.17722826721374}
+closestUniqueVector.get([255,255]) // => {"closest":[222,5],"index":2,"distance":252.16859439668534}
+closestUniqueVector.get([255,255]) // => {"closest":[222,4],"index":3,"distance":253.16002844051033}
+closestUniqueVector.get([255,255]) // => {"closest":[1,2],"index":0,"distance":358.50383540486706}
 closestUniqueVector.get([255,255]) // => Null (Out of entries to return)
 closestUniqueVector.clearCache()
-closestUniqueVector.get([255,255]) // => {"closest":[222,6],"closestIndex":1,"distance":251.17722826721374}
+closestUniqueVector.get([255,255]) // => {"closest":[222,6],"index":1,"distance":251.17722826721374}
 
 ```
 
@@ -41,10 +57,10 @@ closestUniqueVector.get([255,255]) // => {"closest":[222,6],"closestIndex":1,"di
 const Closest = require('closestvector');
 const closestNumber = new Closest([10,3,10,45,30,120]);
 
-closestNumber.get(10) // => {closest: 10, closestIndex: 0, distance: 0}
-closestNumber.get(100) // => {closest: 120, closestIndex: 5, distance: 20}
-closestNumber.get(100000) // => {closest: 120, closestIndex: 5, distance: 99880}
-closestNumber.get(1) // => {closest: 3, closestIndex: 1, distance: 2}
+closestNumber.get(10) // => {closest: 10, index: 0, distance: 0}
+closestNumber.get(100) // => {closest: 120, index: 5, distance: 20}
+closestNumber.get(100000) // => {closest: 120, index: 5, distance: 99880}
+closestNumber.get(1) // => {closest: 3, index: 1, distance: 2}
 ```
 
 ### Closest Vector3 or RGB Color 
@@ -59,7 +75,7 @@ const closestColor = new Closest([
   [0,255,255],
   [255,255,0]
 ]);
-closestColor.get([0,192,200]) // => {"closest":[0,255,255],"closestIndex":5,"distance":83.6301381082203}
+closestColor.get([0,192,200]) // => {"closest":[0,255,255],"index":5,"distance":83.6301381082203}
 ```
 
 ## How it works

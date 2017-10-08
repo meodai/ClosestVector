@@ -11,7 +11,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Closest = function () {
   /**
    * Creates an instance of Closest.
-   * @param {Array} list Elements of reference can be an Array of Numbers or 
+   * @param {Array} list Elements of reference can be an Array of Numbers or
    *                     Array's with an equal length
    * @param {Boolean} unique If set to true, every entry from `list` can be returned only once
    *                         unit clearCache() is called
@@ -26,16 +26,16 @@ var Closest = function () {
 
     this.unique = unique;
 
-    // sets the adequate diff method based on the depth of the vectors     
+    // sets the adequate diff method based on the depth of the vectors
     this.diff = this.dimensions > 1 ? Closest.nDimensionalDiff : Closest.oneDimensionalDiff;
 
-    // inits the cache and indexCache properties
-    this.clearCache();
+    // inits the cache and previouslyReturnedIndexes properties
+    this.clearCache(false);
   }
 
   /**
    * @static determines if the items in the list are simple numbers or arrays
-   * @param {Number|Array} item 
+   * @param {Number|Array} item
    * @return number of dimensions (1 being a simple number, everything above is an array)
    */
 
@@ -45,33 +45,41 @@ var Closest = function () {
 
 
     /**
-     * Public method to rest cached values
+     * Public method to rest cached value / result paris
+     * especially if set to unique (return every match only once)
+     * you may want to reset the previously returned indexes
+     * @param {Boolean} indexOnly if you are using "unique" mode only the returned
+     *                            indexes are cleared by default
      */
     value: function clearCache() {
-      this.cache = {};
-      this.indexCache = [];
+      var indexOnly = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.unique;
+
+      if (!indexOnly) {
+        this.cache = {};
+      }
+      this.previouslyReturnedIndexes = [];
     }
 
     /**
-     * @param {Number|Array} val reference number or array 
-     * @return {Object|Null} closes match within lists containing 
+     * @param {Number|Array} val reference number or array
+     * @return {Object|Null} closes match within lists containing
      *                      {
-     *                         closest: {Number|Array} closes entry from list,
-     *                         closestIndex: {Number} index within list,
+     *                         closest: {Number|Array} closest entry from list,
+     *                         index: {Number} index within list,
      *                         distance: {Number} Distance within the coordinate system
-     *                      }  
+     *                      }
      */
 
   }, {
     key: 'get',
     value: function get(val) {
       var minDistance = Infinity;
-      var closestIndex = 0;
-      var closest = this.list[closestIndex];
+      var index = 0;
+      var closest = this.list[index];
 
       // is there a better way to do this? If "val" is only a number, it seams like a big
-      // overhead to JSON stringify it everytime, I don't see an other way when val is an array
-      // thought. Other than somthing like cache[val[0]][val[1]][val[3]] or whatever
+      // overhead to JSON stringify it every-time, I don't see an other way when val is an array
+      // thought. Other than something like cache[val[0]][val[1]][val[3]] or whatever
       var valUID = JSON.stringify(val);
 
       // returns previously found match
@@ -81,27 +89,29 @@ var Closest = function () {
 
       // if set to return every value in the list only once
       // and being out of entries in the list
-      if (this.unique && this.indexCache.length === this.list.length) {
+      if (this.unique && this.previouslyReturnedIndexes.length === this.list.length) {
         return null;
       }
 
       for (var i = 0; i < this.list.length; i++) {
-        // skip if set to unique and value was returned previously 
-        if (!(this.unique && this.indexCache.indexOf(i) > -1)) {
+        // skip if set to unique and value was returned previously
+        if (!(this.unique && this.previouslyReturnedIndexes.indexOf(i) > -1)) {
           var distance = this.diff(val, this.list[i]);
           if (distance < minDistance) {
             minDistance = distance;
-            closestIndex = i;
+            index = i;
             closest = this.list[i];
           }
         }
       }
 
+      // save previously returned indexes if set to unique mode, 
       if (this.unique) {
-        this.indexCache.push(closestIndex);
+        this.previouslyReturnedIndexes.push(index);
       }
 
-      return this.cache[valUID] = { closest: closest, closestIndex: closestIndex, distance: minDistance };
+      // return and save in cache
+      return this.cache[valUID] = { closest: closest, index: index, distance: minDistance };
     }
   }], [{
     key: 'getDimensions',
@@ -111,8 +121,8 @@ var Closest = function () {
 
     /**
      * @static diff function for simple numbers
-     * @param {Number} val1 
-     * @param {Number} val2 
+     * @param {Number} val1
+     * @param {Number} val2
      * @return Abstract difference between two numbers
      */
 
@@ -124,8 +134,8 @@ var Closest = function () {
 
     /**
      * @static diff function for array's of N numbers
-     * @param {Array} val1 
-     * @param {Array} val2 
+     * @param {Array} val1
+     * @param {Array} val2
      * @return Euclidean distance (https://en.wikipedia.org/wiki/Euclidean_distance)
      */
 

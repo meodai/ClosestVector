@@ -21,7 +21,7 @@ describe('Closest', () => {
     
     expect(closestVector.get([255,255])).to.deep.equal({
       "closest":[255,255],
-      "closestIndex":3,
+      "index":3,
       "distance":0
     });
   });
@@ -79,4 +79,16 @@ describe('Closest', () => {
       )
     );
   });
-})
+
+  it('Clear chache correctly in "unique" mode', () => {
+    const closest = new Closest([1,2,3,4], true);
+    
+    expect(closest.get(1).closest).to.be.equal(1);
+    expect(closest.get(1).closest).to.be.equal(2);
+
+    closest.clearCache();
+
+    expect(closest.get(1).closest).to.be.equal(1);
+  });
+
+});
