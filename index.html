@@ -74,40 +74,43 @@
     <script src="index.umd.js"></script>
     <script>
       
+      let numberOfDots, dots, closestDot;
+      const $dotsCanvas = document.querySelector('.js-dots2d');
+      let ctx = $dotsCanvas.getContext('2d');
+        
+      let dotCanvasBox;
+      const mesureCanvas = () => {
+        dotCanvasBox = $dotsCanvas.getBoundingClientRect();
+      }
+
       const dotsDemo = () => {
         // dots demo
-        const numberOfDots = parseInt(document.querySelector('.js-dots2d-lenght').value);
-        const dots = new Array(Math.min(10000,numberOfDots)).fill([]).map(dot => ([Math.random(),Math.random()]));
-        const closestDot = new Closest(dots);
-        const $dotsCanvas = document.querySelector('.js-dots2d');
-        const ctx = $dotsCanvas.getContext('2d');
+        numberOfDots = parseInt(document.querySelector('.js-dots2d-lenght').value);
+        dots = new Array(Math.min(10000,numberOfDots)).fill([]).map(dot => ([Math.random(),Math.random()]));
+        closestDot = new Closest(dots);
         
-        let dotCanvasBox;
-        const mesureCanvas = () => {
-          dotCanvasBox = $dotsCanvas.getBoundingClientRect();
-        }
-
         mesureCanvas();
-
-        window.addEventListener('scroll', mesureCanvas);
-        $dotsCanvas.setAttribute('width', dotCanvasBox.width);
-        $dotsCanvas.setAttribute('height', dotCanvasBox.height);
 
         ctx.fillStyle = '#fff';
         ctx.fillRect(0, 0, dotCanvasBox.width, dotCanvasBox.height);
         
-
         dots.forEach(dot => {
           ctx.beginPath();
           ctx.fillStyle = '#212121';
           ctx.arc(dot[0] * dotCanvasBox.width, dot[1] * dotCanvasBox.height, 3, 0, 2*Math.PI);
           ctx.fill()
           ctx.closePath();
-        });
-        
-        
+        });        
+      }
 
-        $dotsCanvas.addEventListener('mousemove', e => {
+
+      dotsDemo();
+
+      window.addEventListener('scroll', mesureCanvas);
+      $dotsCanvas.setAttribute('width', dotCanvasBox.width);
+      $dotsCanvas.setAttribute('height', dotCanvasBox.height);
+
+      $dotsCanvas.addEventListener('mousemove', e => {
           requestAnimationFrame(() => {
             ctx.fillStyle = '#fff';
             ctx.fillRect(0, 0, dotCanvasBox.width, dotCanvasBox.height);
@@ -121,10 +124,6 @@
             })
           })
         });
-      }
-
-      dotsDemo();
-
       window.addEventListener('resize', dotsDemo);
       document.querySelector('.js-dots2d-lenght').addEventListener('input', dotsDemo);
     </script>
