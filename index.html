@@ -12,6 +12,9 @@
         line-height: 1.45;
         color: #212121; 
       }
+      body {
+        padding-bottom: 5rem;
+      }
       .logo {
         width: 10rem;
         height: 10rem;
@@ -22,6 +25,7 @@
       }
       .text-title {
         text-align: center;
+        font-weight: normal;
       }
       .text-title span {
         display: block;
@@ -30,14 +34,16 @@
 
       }
       .sandbox__canvas {
-        position: relative;
+        display: block;
+        width: 100%;
         height: 30vmax;
-        background: #212121;
+        box-shadow: 0 0 0 3px #212121,
+                    1rem 1rem 0 0 #212121; 
       }
       .dot {
         position: absolute;
         width: 3px; height: 3px;
-        background: #fff;
+        background: #212121;
         border-radius: 50%;
         transform: translate(-50%,-50%);
       }
@@ -58,9 +64,10 @@
       <section class="section">
         <h2 class="text-title text-title--section">Vector 2 Demo</h2>
         <div class="sandbox">
-          <div class="sandbox__canvas js-dots2d">
-
-          </div>
+          <p class="sandbox__text">
+            Move your mouse cursor to highlight one of <label><input class="js-dots2d-lenght" type="number" value="2222" step="1" min="0" max="10000" /> dots</label> highlited
+          </p>
+          <canvas class="sandbox__canvas js-dots2d"></canvas>
         </div>
       </section>
     </div>
@@ -69,18 +76,12 @@
       
       const dotsDemo = () => {
         // dots demo
-        let dots = new Array(1000).fill([]).map(dot => ([Math.random(),Math.random()]));
-        let closestDot = new Closest(dots);
-        let $dotsCanvas = document.querySelector('.js-dots2d');
-        let htmlDots = dots.map(dot => {
-          let $el = document.createElement('div');
-          $el.style.top = `${dot[1] * 100}%`;
-          $el.style.left = `${dot[0] * 100}%`;
-          $el.classList.add('dot');
-          $dotsCanvas.appendChild($el);
-          return $el;
-        });
-
+        const numberOfDots = parseInt(document.querySelector('.js-dots2d-lenght').value);
+        const dots = new Array(Math.min(10000,numberOfDots)).fill([]).map(dot => ([Math.random(),Math.random()]));
+        const closestDot = new Closest(dots);
+        const $dotsCanvas = document.querySelector('.js-dots2d');
+        const ctx = $dotsCanvas.getContext('2d');
+        
         let dotCanvasBox;
         const mesureCanvas = () => {
           dotCanvasBox = $dotsCanvas.getBoundingClientRect();
@@ -88,23 +89,44 @@
 
         mesureCanvas();
 
-        window.addEventListener('resize', mesureCanvas);
         window.addEventListener('scroll', mesureCanvas);
+        $dotsCanvas.setAttribute('width', dotCanvasBox.width);
+        $dotsCanvas.setAttribute('height', dotCanvasBox.height);
 
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, dotCanvasBox.width, dotCanvasBox.height);
+        
+
+        dots.forEach(dot => {
+          ctx.beginPath();
+          ctx.fillStyle = '#212121';
+          ctx.arc(dot[0] * dotCanvasBox.width, dot[1] * dotCanvasBox.height, 3, 0, 2*Math.PI);
+          ctx.fill()
+          ctx.closePath();
+        });
+        
+        
 
         $dotsCanvas.addEventListener('mousemove', e => {
-          let index = closestDot.get([(e.clientX - dotCanvasBox.left) / dotCanvasBox.width, (e.clientY - dotCanvasBox.top) / dotCanvasBox.height]).index;
-          htmlDots.forEach(($dot, i) => {
-            if (i === index) {
-              $dot.classList.add('dot--active');
-            } else {
-              $dot.classList.remove('dot--active');
-            }
+          requestAnimationFrame(() => {
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, 0, dotCanvasBox.width, dotCanvasBox.height);
+            let index = closestDot.get([(e.clientX - dotCanvasBox.left) / dotCanvasBox.width, (e.clientY - dotCanvasBox.top) / dotCanvasBox.height]).index;
+            dots.forEach((dot, i) => {
+              ctx.beginPath();
+              ctx.fillStyle = i === index ? '#ff2200' : '#212121';
+              ctx.arc(dot[0] * dotCanvasBox.width, dot[1] * dotCanvasBox.height, i === index ? 6 : 3, 0, 2*Math.PI);
+              ctx.fill()
+              ctx.closePath();
+            })
           })
         });
       }
 
       dotsDemo();
+
+      window.addEventListener('resize', dotsDemo);
+      document.querySelector('.js-dots2d-lenght').addEventListener('input', dotsDemo);
     </script>
   </body>
 </html>
