@@ -8,13 +8,19 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+/**
+   * Return closest Number/Vector2/Vector3/VectorN from a given list
+   * uses caching for faster response. Has the ability to return every match
+   * only once.
+   */
 var Closest = function () {
   /**
    * Creates an instance of Closest.
-   * @param {Array} list Elements of reference can be an Array of Numbers or
-   *                     Array's with an equal length
-   * @param {Boolean} unique If set to true, every entry from `list` can be returned only once
-   *                         unit clearCache() is called
+   * @param {Array}     list    Elements of reference can be an Array of Numbers
+   *                            or Array's with an equal length
+   * @param {Boolean}   unique  If set to true, every entry from `list`
+   *                            can be returned only once
+   *                            unit clearCache() is called
    */
   function Closest(list, unique) {
     _classCallCheck(this, Closest);
@@ -34,9 +40,11 @@ var Closest = function () {
   }
 
   /**
-   * @static determines if the items in the list are simple numbers or arrays
-   * @param {Number|Array} item
-   * @return number of dimensions (1 being a simple number, everything above is an array)
+   * determines if the items in the list are simple numbers or arrays
+   * @static
+   * @param     {Number|Array} item
+   * @return    {Number}       number of dimensions (1 being a simple number,
+   *                           everything above is an array)
    */
 
 
@@ -61,12 +69,14 @@ var Closest = function () {
     }
 
     /**
+     * gets the closes Number/VectorN
      * @param {Number|Array} val reference number or array
      * @return {Object|Null} closes match within lists containing
      *                      {
-     *                         closest: {Number|Array} closest entry from list,
-     *                         index: {Number} index within list,
-     *                         distance: {Number} Distance within the coordinate system
+     *                         closest:   {Number|Array} closest entry from list
+     *                         index:     {Number}       index within list
+     *                         distance:  {Number}       Distance within the
+     *                                                   coordinate system
      *                      }
      */
 
@@ -77,9 +87,10 @@ var Closest = function () {
       var index = 0;
       var closest = this.list[index];
 
-      // is there a better way to do this? If "val" is only a number, it seams like a big
-      // overhead to JSON stringify it every-time, I don't see an other way when val is an array
-      // thought. Other than something like cache[val[0]][val[1]][val[3]] or whatever
+      // is there a better way to do this? If "val" is only a number, it seams
+      // like a big overhead to JSON stringify it every-time, I don't see an other
+      // way when val is an array thought. Other than something like
+      // cache[val[0]][val[1]][val[3]] or whatever
       var valUID = JSON.stringify(val);
 
       // returns previously found match
@@ -105,7 +116,7 @@ var Closest = function () {
         }
       }
 
-      // save previously returned indexes if set to unique mode, 
+      // save previously returned indexes if set to unique mode,
       if (this.unique) {
         this.previouslyReturnedIndexes.push(index);
       }
@@ -120,10 +131,11 @@ var Closest = function () {
     }
 
     /**
-     * @static diff function for simple numbers
-     * @param {Number} val1
-     * @param {Number} val2
-     * @return Abstract difference between two numbers
+     * diff function for simple numbers
+     * @static
+     * @param     {Number} val1
+     * @param     {Number} val2
+     * @return    {Number} Abstract difference between two numbers
      */
 
   }, {
@@ -133,10 +145,12 @@ var Closest = function () {
     }
 
     /**
-     * @static diff function for array's of N numbers
-     * @param {Array} val1
-     * @param {Array} val2
-     * @return Euclidean distance (https://en.wikipedia.org/wiki/Euclidean_distance)
+     * diff function for array's of N numbers
+     * @static
+     * @param     {Array}  val1
+     * @param     {Array}  val2
+     * @return    {Number} Euclidean distance
+     *                     (https://en.wikipedia.org/wiki/Euclidean_distance)
      */
 
   }, {
