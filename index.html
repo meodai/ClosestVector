@@ -10,7 +10,8 @@
         font-family: 'Inter UI', sans-serif;
         font-size: calc(.6rem + .5vw);
         line-height: 1.45;
-        color: #212121; 
+        background: #212121;
+        color: #fff; 
       }
       body {
         padding-bottom: 5rem;
@@ -33,12 +34,20 @@
       .text-lead {
 
       }
+      .sandbox__wrap {
+        position: relative;
+        height: 40vmax;
+      }
       .sandbox__canvas {
+        position: absolute;
         display: block;
-        width: 100%;
-        height: 30vmax;
-        box-shadow: 0 0 0 3px #212121,
-                    1rem 1rem 0 0 #212121; 
+        width: 100vw;
+
+        height: 100%;
+
+        line-height: 0;
+        transform: translateX(-50%);
+        left: 50%;
       }
       .dot {
         position: absolute;
@@ -65,9 +74,11 @@
         <h2 class="text-title text-title--section">Vector 2 Demo</h2>
         <div class="sandbox">
           <p class="sandbox__text">
-            Move your mouse cursor to highlight one of <label><input class="js-dots2d-lenght" type="number" value="2222" step="1" min="0" max="10000" /> dots</label> highlited
+            Move your mouse cursor to highlight one of <label><input class="js-dots2d-lenght" type="number" value="222" step="1" min="0" max="10000" /> dots</label> highlited
           </p>
-          <canvas class="sandbox__canvas js-dots2d"></canvas>
+          <div class="sandbox__wrap">
+            <canvas class="sandbox__canvas js-dots2d"></canvas>
+          </div>
         </div>
       </section>
     </div>
@@ -79,26 +90,28 @@
       let ctx = $dotsCanvas.getContext('2d');
         
       let dotCanvasBox;
+      
+
       const mesureCanvas = () => {
         dotCanvasBox = $dotsCanvas.getBoundingClientRect();
-      }
+      } 
 
       const dotsDemo = () => {
         // dots demo
         numberOfDots = parseInt(document.querySelector('.js-dots2d-lenght').value);
         dots = new Array(Math.min(10000,numberOfDots)).fill([]).map(dot => ([Math.random(),Math.random()]));
         closestDot = new Closest(dots);
-        
+         
         mesureCanvas();
 
-        ctx.fillStyle = '#fff';
+        ctx.fillStyle = '#212121';
         ctx.fillRect(0, 0, dotCanvasBox.width, dotCanvasBox.height);
         
         dots.forEach(dot => {
           ctx.beginPath();
-          ctx.fillStyle = '#212121';
+          ctx.fillStyle = '#fff';
           ctx.arc(dot[0] * dotCanvasBox.width, dot[1] * dotCanvasBox.height, 3, 0, 2*Math.PI);
-          ctx.fill()
+          ctx.fill();
           ctx.closePath();
         });        
       }
@@ -109,20 +122,49 @@
       window.addEventListener('scroll', mesureCanvas);
       $dotsCanvas.setAttribute('width', dotCanvasBox.width);
       $dotsCanvas.setAttribute('height', dotCanvasBox.height);
-
+      let rafid;
       $dotsCanvas.addEventListener('mousemove', e => {
-          requestAnimationFrame(() => {
-            ctx.fillStyle = '#fff';
+          cancelAnimationFrame(rafid);
+          rxafid = requestAnimationFrame(() => {
+            ctx.fillStyle = '#212121';
             ctx.fillRect(0, 0, dotCanvasBox.width, dotCanvasBox.height);
             let index = closestDot.get([(e.clientX - dotCanvasBox.left) / dotCanvasBox.width, (e.clientY - dotCanvasBox.top) / dotCanvasBox.height]).index;
             dots.forEach((dot, i) => {
               ctx.beginPath();
-              ctx.fillStyle = i === index ? '#ff2200' : '#212121';
-              ctx.arc(dot[0] * dotCanvasBox.width, dot[1] * dotCanvasBox.height, i === index ? 6 : 3, 0, 2*Math.PI);
-              ctx.fill()
+
+              ctx.setLineDash([]);
+              //ctx.fillStyle = i === index ? '#f0f' : '#fff';
+              //ctx.arc(dot[0] * dotCanvasBox.width, dot[1] * dotCanvasBox.height, i === index ? 6 : 3, 0, 2*Math.PI);
+              let centerY = dot[0] * dotCanvasBox.width;
+              let centerX = dot[1] * dotCanvasBox.height;
+              let rad = i === index ? 5 : 3;
+              ctx.strokeStyle=i === index ? '#f0f' : '#0ff';
+              ctx.moveTo(centerY - rad, centerX - rad);
+              ctx.lineTo(centerY + rad, centerX + rad);
+              ctx.moveTo(centerY + rad, centerX - rad);
+              ctx.lineTo(centerY - rad, centerX + rad);
+              ctx.stroke();
+              //ctx.fill()
               ctx.closePath();
-            })
-          })
+
+              ctx.beginPath();
+              ctx.setLineDash([1, 3]);
+              ctx.strokeStyle='#f0f';
+              ctx.moveTo(e.clientX - dotCanvasBox.left, e.clientY - dotCanvasBox.top);
+              ctx.lineTo(dots[index][0] * dotCanvasBox.width,dots[index][1] * dotCanvasBox.height);
+              ctx.stroke();
+              ctx.closePath();
+            });
+
+            const radGrad = ctx.createRadialGradient(
+                dotCanvasBox.width * .5, dotCanvasBox.height * .5, dotCanvasBox.height * .2, 
+                dotCanvasBox.width * .5, dotCanvasBox.height * .5, dotCanvasBox.width * .5
+            );
+            radGrad.addColorStop(0, "rgba(21,21,21,0)");
+            radGrad.addColorStop(1, "#212121");
+            ctx.fillStyle = radGrad;
+            ctx.fillRect(0, 0, dotCanvasBox.width, dotCanvasBox.height);
+          });
         });
       window.addEventListener('resize', dotsDemo);
       document.querySelector('.js-dots2d-lenght').addEventListener('input', dotsDemo);
