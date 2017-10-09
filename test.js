@@ -53,15 +53,15 @@ describe('Closest', () => {
   });
 
   it('Closest.nDimensionalDiff to return correct difference between two Vector2', () => {
-    expect(Closest.nDimensionalDiff([10,10],[10,10])).to.be.equal(0);
-    expect(Closest.nDimensionalDiff([10,10],[100,100])).to.be.equal(
+    expect(Closest.nDimensionalDiff(2)([10,10],[10,10])).to.be.equal(0);
+    expect(Closest.nDimensionalDiff(2)([10,10],[100,100])).to.be.equal(
       Math.sqrt(
         (10 - 100) * (10 - 100) +
         (10 - 100) * (10 - 100)
       )
     );
 
-    expect(Closest.nDimensionalDiff([-1,1],[100,100])).to.be.equal(
+    expect(Closest.nDimensionalDiff(2)([-1,1],[100,100])).to.be.equal(
       Math.sqrt(
         (-1 - 100) * (-1 - 100) +
         (1 - 100) * (1 - 100)
@@ -70,8 +70,8 @@ describe('Closest', () => {
   });
 
   it('Closest.nDimensionalDiff to return correct difference between two Vector3', () => {
-    expect(Closest.nDimensionalDiff([255,255,255],[255,255,255])).to.be.equal(0);
-    expect(Closest.nDimensionalDiff([255,255,255],[0,0,0])).to.be.equal(
+    expect(Closest.nDimensionalDiff(3)([255,255,255],[255,255,255])).to.be.equal(0);
+    expect(Closest.nDimensionalDiff(3)([255,255,255],[0,0,0])).to.be.equal(
       Math.sqrt(
         (255 - 0) * (255 - 0) +
         (255 - 0) * (255 - 0) +

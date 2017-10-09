@@ -33,8 +33,8 @@ var Closest = function () {
     this.unique = unique;
 
     // sets the adequate diff method based on the depth of the vectors
-    this.diff = this.dimensions > 1 ? Closest.nDimensionalDiff : Closest.oneDimensionalDiff;
-
+    this.diff = this.dimensions > 1 ? Closest.nDimensionalDiff(this.dimensions) : Closest.oneDimensionalDiff;
+    console.log(this.diff);
     // inits the cache and previouslyReturnedIndexes properties
     this.clearCache(false);
   }
@@ -53,7 +53,7 @@ var Closest = function () {
 
 
     /**
-     * Public method to rest cached value / result paris
+     Public method to rest cached value / result paris
      * especially if set to unique (return every match only once)
      * you may want to reset the previously returned indexes
      * @param {Boolean} indexOnly if you are using "unique" mode only the returned
@@ -147,18 +147,31 @@ var Closest = function () {
     /**
      * diff function for array's of N numbers
      * @static
-     * @param     {Array}  val1
-     * @param     {Array}  val2
-     * @return    {Number} Euclidean distance
-     *                     (https://en.wikipedia.org/wiki/Euclidean_distance)
+     * @param     {Number} dimensions number of dimensions of your vector
+     * @return    {Function} returns the adequate diff function
+     *                       Euclidean distance
+     *                       (https://en.wikipedia.org/wiki/Euclidean_distance)
      */
 
   }, {
     key: 'nDimensionalDiff',
-    value: function nDimensionalDiff(val1, val2) {
-      return Math.sqrt(val1.reduce(function (acc, val, i) {
-        return Math.pow(val - val2[i], 2) + acc;
-      }, 0));
+    value: function nDimensionalDiff(dimensions) {
+      if (dimensions == 2) {
+        return function (val1, val2) {
+          return Math.sqrt(Math.pow(val1[0] - val2[0], 2) + Math.pow(val1[1] - val2[1], 2));
+        };
+      } else if (dimensions == 3) {
+        return function (val1, val2) {
+          return Math.sqrt(Math.pow(val1[0] - val2[0], 2) + Math.pow(val1[1] - val2[1], 2) + Math.pow(val1[2] - val2[2], 2));
+        };
+      } else {
+        // elegant but slow solution
+        return function (val1, val2) {
+          return Math.sqrt(val1.reduce(function (acc, val, i) {
+            return Math.pow(val - val2[i], 2) + acc;
+          }, 0));
+        };
+      }
     }
   }]);
 
