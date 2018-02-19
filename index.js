@@ -60,25 +60,19 @@ export default class Closest {
   static nDimensionalDiff(dimensions) {
     if (dimensions == 2) {
       return (val1, val2) => (
-        Math.sqrt(
-          Math.pow(val1[0] - val2[0], 2) +
-          Math.pow(val1[1] - val2[1], 2)
-       )
+        Math.pow(val1[0] - val2[0], 2) +
+        Math.pow(val1[1] - val2[1], 2)
       )
     } else if (dimensions == 3) {
       return (val1, val2) => (
-        Math.sqrt(
-          Math.pow(val1[0] - val2[0], 2) +
-          Math.pow(val1[1] - val2[1], 2) +
-          Math.pow(val1[2] - val2[2], 2)
-       )
+        Math.pow(val1[0] - val2[0], 2) +
+        Math.pow(val1[1] - val2[1], 2) +
+        Math.pow(val1[2] - val2[2], 2)
       )
     } else {
       // elegant but slow solution
       return (val1, val2) => (
-        Math.sqrt(
-          val1.reduce((acc, val, i) => (Math.pow(val - val2[i], 2) + acc), 0)
-        )
+        val1.reduce((acc, val, i) => (Math.pow(val - val2[i], 2) + acc), 0)
       )
     }
   }
@@ -148,6 +142,6 @@ export default class Closest {
     }
 
     // return and save in cache
-    return this.cache[valUID] = {closest, index, distance: minDistance};
+    return this.cache[valUID] = {closest, index};
   }
 }

@@ -122,7 +122,7 @@ var Closest = function () {
       }
 
       // return and save in cache
-      return this.cache[valUID] = { closest: closest, index: index, distance: minDistance };
+      return this.cache[valUID] = { closest: closest, index: index };
     }
   }], [{
     key: 'getDimensions',
@@ -158,18 +158,18 @@ var Closest = function () {
     value: function nDimensionalDiff(dimensions) {
       if (dimensions == 2) {
         return function (val1, val2) {
-          return Math.sqrt(Math.pow(val1[0] - val2[0], 2) + Math.pow(val1[1] - val2[1], 2));
+          return Math.pow(val1[0] - val2[0], 2) + Math.pow(val1[1] - val2[1], 2);
         };
       } else if (dimensions == 3) {
         return function (val1, val2) {
-          return Math.sqrt(Math.pow(val1[0] - val2[0], 2) + Math.pow(val1[1] - val2[1], 2) + Math.pow(val1[2] - val2[2], 2));
+          return Math.pow(val1[0] - val2[0], 2) + Math.pow(val1[1] - val2[1], 2) + Math.pow(val1[2] - val2[2], 2);
         };
       } else {
         // elegant but slow solution
         return function (val1, val2) {
-          return Math.sqrt(val1.reduce(function (acc, val, i) {
+          return val1.reduce(function (acc, val, i) {
             return Math.pow(val - val2[i], 2) + acc;
-          }, 0));
+          }, 0);
         };
       }
     }
