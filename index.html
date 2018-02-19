@@ -8,15 +8,20 @@
 
       html, body {
         font-family: 'Inter UI', sans-serif;
-        font-size: calc(.6rem + .5vw);
+        font-size: calc(.9rem + .3vw);
         line-height: 1.45;
         background: #212121;
         color: #fff; 
+        text-align: center;
+        margin: 0; padding: 0;
       }
       body {
-        padding-bottom: 5rem;
+        display: flex;
         background: transparent;
         pointer-events: none;
+        justify-content: space-around;
+        align-items: center;
+        min-height: 100vh;
       }
       input {
         pointer-events: auto;
@@ -29,10 +34,8 @@
         max-width: 40em;
         margin: 0 auto;
         background: transparent;
-      
       }
       .text-title {
-        text-align: center;
         font-weight: normal;
       }
       .text-title span {
@@ -41,10 +44,7 @@
       .text-lead {
 
       }
-      .sandbox__wrap {
-        
-      }
-      .sandbox__canvas {
+      .canvas {
         pointer-events: auto;
         z-index: -1;
         position: fixed;
@@ -77,19 +77,15 @@
         <svg class="logo" xmlns="http://www.w3.org/2000/svg" width="345.25" height="331.53" viewBox="0 0 345.25 331.53"><defs><style>.cls-1{fill:#160017}.cls-2{fill:url(#linear-gradient)}.cls-3{fill:#fff}</style><linearGradient id="linear-gradient" x1="71.76" y1="57.76" x2="209.2" y2="360.27" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f0f"/><stop offset="1" stop-color="#0ff"/></linearGradient></defs><title>closestvector</title><circle class="cls-1" cx="167.62" cy="189.53" r="142"/><path class="cls-2" d="M14.06 288.57L176.62 7l162.57 281.57H14.06z"/><path d="M203.25 49.13l156.5 271.07h-313l156.5-271.07m0-14l-6.06 10.5-156.5 271.06-6.06 10.5h337.24l-6.06-10.5-156.5-271.06-6.06-10.5z" transform="translate(-26.63 -35.13)"/><path class="cls-3" d="M172.65 20.89l148.47 257.18H24.17l-4.05 7h313L176.62 14l-3.97 6.89zM12.12 285.07L168.62 14l3.98 6.89 1.96-3.39 2.09-3.61-1.96-3.39L168.62 0l-6.06 10.5L6.06 281.57 0 292.07l12.12-7z"/><path class="cls-3" d="M295.79 274.41a10.79 10.79 0 1 1-10.79 10.8 10.79 10.79 0 0 1 10.79-10.79m0-5a15.79 15.79 0 1 0 15.79 15.79 15.81 15.81 0 0 0-15.79-15.79z" transform="translate(-26.63 -35.13)"/></svg>
         <span>Closestᐁector</span>  
       </h1>
-      <p class="text-leat">Super fast lightweight and dependency free library to Get closest Number / Vector / VectorN from an array with caching and stuff</p>
+      <p>Super fast lightweight and dependency free library to get closest Number / Vector / VectorN from an array with caching and stuff</p>
       <section class="section">
         <h2 class="text-title text-title--section">Vector 2 Demo</h2>
-        <div class="sandbox">
-          <p class="sandbox__text">
-            Move your mouse cursor to highlight one of <label><input class="js-dots2d-lenght" type="number" value="222" step="1" min="0" max="10000" /> dots</label> highlited
-          </p>
-          <div class="sandbox__wrap">
-            <canvas class="sandbox__canvas js-dots2d"></canvas>
-          </div>
-        </div>
+        <p>
+            Move your mouse cursor to highlight one of <label><input class="js-dots2d-lenght" type="number" value="222" step="1" min="0" max="10000" /> dots</label>
+        </p>
       </section>
     </div>
+    <canvas class="canvas js-dots2d"></canvas>
     <script src="index.umd.js"></script>
     <script>
       
