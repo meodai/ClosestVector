@@ -43,7 +43,7 @@
         display: block;
         width: 100vw;
 
-        height: 100%;
+        height: 100vw;
 
         line-height: 0;
         transform: translateX(-50%);
@@ -151,7 +151,7 @@
               ctx.setLineDash([1, 3]);
               ctx.strokeStyle='#f0f';
               ctx.moveTo(e.clientX - dotCanvasBox.left, e.clientY - dotCanvasBox.top);
-              ctx.lineTo(dots[index][0] * dotCanvasBox.width,dots[index][1] * dotCanvasBox.height);
+              ctx.lineTo(dots[index][0] * dotCanvasBox.width, dots[index][1] * dotCanvasBox.height);
               ctx.stroke();
               ctx.closePath();
             });
