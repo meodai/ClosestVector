@@ -15,6 +15,11 @@
       }
       body {
         padding-bottom: 5rem;
+        background: transparent;
+        pointer-events: none;
+      }
+      input {
+        pointer-events: auto;
       }
       .logo {
         width: 10rem;
@@ -23,6 +28,8 @@
       .layout {
         max-width: 40em;
         margin: 0 auto;
+        background: transparent;
+      
       }
       .text-title {
         text-align: center;
@@ -35,19 +42,20 @@
 
       }
       .sandbox__wrap {
-        position: relative;
-        height: 40vmax;
+        
       }
       .sandbox__canvas {
-        position: absolute;
+        pointer-events: auto;
+        z-index: -1;
+        position: fixed;
         display: block;
         width: 100vw;
-
         height: 100vw;
 
         line-height: 0;
-        transform: translateX(-50%);
+        transform: translate(-50%, -50%);
         left: 50%;
+        top: 50%;
       }
       .dot {
         position: absolute;
