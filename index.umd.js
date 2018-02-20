@@ -34,7 +34,7 @@ var Closest = function () {
 
     // sets the adequate diff method based on the depth of the vectors
     this.diff = this.dimensions > 1 ? Closest.nDimensionalDiff(this.dimensions) : Closest.oneDimensionalDiff;
-    console.log(this.diff);
+    // console.log(this.diff)
     // inits the cache and previouslyReturnedIndexes properties
     this.clearCache(false);
   }
