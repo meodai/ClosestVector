@@ -7,6 +7,7 @@
       @import url('https://rsms.me/inter/inter-ui.css');
 
       html, body {
+        cursor: none;
         font-family: 'Inter UI', sans-serif;
         font-size: calc(.9rem + .3vw);
         line-height: 1.45;
@@ -23,8 +24,9 @@
         align-items: center;
         min-height: 100vh;
       }
-      input {
+      input, a {
         pointer-events: auto;
+        cursor: pointer;
       }
       .logo {
         width: 10rem;
@@ -132,7 +134,10 @@
           rxafid = requestAnimationFrame(() => {
             ctx.fillStyle = '#212121';
             ctx.fillRect(0, 0, dotCanvasBox.width, dotCanvasBox.height);
-            let index = closestDot.get([(e.clientX - dotCanvasBox.left) / dotCanvasBox.width, (e.clientY - dotCanvasBox.top) / dotCanvasBox.height]).index;
+            const x = (e.clientX - dotCanvasBox.left) / dotCanvasBox.width;
+            const y = (e.clientY - dotCanvasBox.top) / dotCanvasBox.height;
+            const index = closestDot.get([x, y]).index;
+
             dots.forEach((dot, i) => {
               ctx.beginPath();
 
@@ -161,9 +166,22 @@
             });
 
             const radGrad = ctx.createRadialGradient(
-                dotCanvasBox.width * .5, dotCanvasBox.height * .5, dotCanvasBox.height * .2, 
-                dotCanvasBox.width * .5, dotCanvasBox.height * .5, dotCanvasBox.width * .5
+              dotCanvasBox.width * .5, dotCanvasBox.height * .5, dotCanvasBox.height * .2, 
+              dotCanvasBox.width * .5, dotCanvasBox.height * .5, dotCanvasBox.width * .5
             );
+
+            ctx.fillStyle = '#f0f';
+            ctx.beginPath();
+            ctx.arc((e.clientX - dotCanvasBox.left), (e.clientY - dotCanvasBox.top), 6, 0, 2 * Math.PI);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            ctx.arc((e.clientX - dotCanvasBox.left), (e.clientY - dotCanvasBox.top), 2, 0, 2 * Math.PI);
+            ctx.closePath();
+            ctx.fill();
+
             radGrad.addColorStop(0, "rgba(21,21,21,0)");
             radGrad.addColorStop(1, "#212121");
             ctx.fillStyle = radGrad;
