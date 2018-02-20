@@ -24,7 +24,7 @@
         align-items: center;
         min-height: 100vh;
       }
-      input, a {
+      input, a, label {
         pointer-events: auto;
         cursor: pointer;
       }
@@ -37,7 +37,8 @@
         margin: 0 auto;
         background: transparent;
       }
-      .text-title {
+      .text-title,
+      .color-name {
         font-weight: normal;
       }
       .text-title span {
@@ -70,6 +71,11 @@
         background: hotpink;
         transform: translate(-50%,-50%) scale(5);
       }
+      .color-swatch {
+        display: inline-block;
+        width: 1em; height: 1em;
+        border-radius: 100%;
+      }
 
     </style>
   </head>
@@ -83,11 +89,31 @@
       </h1>
       <p>Super fast lightweight and dependency free library to get closest Number / Vector / VectorN from an array with caching and stuff</p>
       <section class="section">
-        <h2 class="text-title text-title--section">Vector 2 Demo</h2>
+        <h2 class="text-title text-title--section">Vector 2</h2>
         <p>
             Move your mouse cursor to highlight one of <label><input class="js-dots2d-lenght" type="number" value="222" step="1" min="0" max="10000" /> dots</label>
         </p>
       </section>
+      <section class="section">
+        <h2 class="text-title text-title--section">Vector 3</h2>
+        <p>
+          Find the closest color in a set of ~16k colors based on RGB coordinates
+          <br/>
+          <label>
+            Reference color:
+            <input name="color" type="color" value="#ff00ff" class="color js-color" />
+            <h3 class="color-name js-color-name"><span class="color-swatch"></span></h3>
+          </label>
+        </p>
+      </section>
+      <!--section class="section">
+        <h2 class="text-title text-title--section">Number Demo</h2>
+        <p>
+          Snap to points between 1 and 100
+          <label>
+            <input type="range" min="1" max="100" value="50" step="1" class="slider js-slider"></label>
+        </p>
+      </section-->
     </div>
     <canvas class="canvas js-dots2d"></canvas>
     <a href="https://github.com/meodai/ClosestVector" class="github-corner" aria-label="View source on Github">
@@ -160,9 +186,8 @@
           ctx.arc(dot[0] * dotCanvasBox.width, dot[1] * dotCanvasBox.height, 3, 0, 2*Math.PI);
           ctx.fill();
           ctx.closePath();
-        });        
+        });
       }
-
 
       dotsDemo();
 
@@ -231,6 +256,48 @@
         });
       window.addEventListener('resize', dotsDemo);
       document.querySelector('.js-dots2d-lenght').addEventListener('input', dotsDemo);
+
+      // color demo
+      const $colorName = document.querySelector('.js-color-name');
+
+      function hexToRgb(hex) {
+        // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+        const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+        hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+          return r + r + g + g + b + b;
+        });
+
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16)
+        } : null;
+      }
+
+      const $colorPicker = document.querySelector('.js-color');
+      const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://unpkg.com/color-name-list/dist/colornames.json');
+        xhr.onload = e => {
+          if (xhr.status === 200) {
+            const colorNames = JSON.parse(xhr.responseText);
+            const colorValues = colorNames.map(col => {
+              const rgb = hexToRgb(col.hex);
+              return [rgb.r, rgb.g, rgb.b];
+            });
+            const colors = new Closest(colorValues);
+
+            $colorPicker.addEventListener('input', (e) => {
+              const rgb = hexToRgb($colorPicker.value);
+              const colorName = colorNames[colors.get([rgb.r, rgb.g, rgb.b]).index];
+              $colorName.innerHTML = `${colorName.name} <span  class="color-swatch" style="background-color:${colorName.hex}"></span>`;
+            });
+
+          } else {
+            console.log(xhr.status);
+          }
+        };
+        xhr.send();
     </script>
   </body>
 </html>
