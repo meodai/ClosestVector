@@ -89,4 +89,6 @@ From [the Wikipedia article on the subject](http://en.wikipedia.org/wiki/Nearest
 > database. Naive search can, on average, outperform space partitioning approaches on higher 
 > dimensional spaces.
 
-ClosestVector is inspired by [nearest-color](https://github.com/dtao/nearest-color/) and was rewritten to solve snappting to coordinates in a less specific way. As nearest-color it uses the naive approach and caches the requests made, so the diffing only happens, if the vector is requested for the first time.
+ClosestVector is inspired by [nearest-color] and was rewritten to solve snapping to coordinates in a less specific way. As nearest-color it uses the naive approach and caches the requests made, so the diffing only happens if the vector is requested for the first time.
+
+[nearest-color]: https://github.com/dtao/nearest-color/
