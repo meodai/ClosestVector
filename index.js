@@ -21,7 +21,8 @@ export default class Closest {
     this.unique = unique;
 
     // sets the adequate diff method based on the depth of the vectors
-    this.diff = this.dimensions > 1 ? Closest.nDimensionalDiff(this.dimensions) : Closest.oneDimensionalDiff;
+    this.diff = this.dimensions > 1 ? Closest.nDimensionalDiff(this.dimensions)
+                : Closest.oneDimensionalDiff;
     // console.log(this.diff)
     // inits the cache and previouslyReturnedIndexes properties
     this.clearCache(false);
@@ -62,18 +63,18 @@ export default class Closest {
       return (val1, val2) => (
         Math.pow(val1[0] - val2[0], 2) +
         Math.pow(val1[1] - val2[1], 2)
-      )
+      );
     } else if (dimensions == 3) {
       return (val1, val2) => (
         Math.pow(val1[0] - val2[0], 2) +
         Math.pow(val1[1] - val2[1], 2) +
         Math.pow(val1[2] - val2[2], 2)
-      )
+      );
     } else {
       // elegant but slow solution
       return (val1, val2) => (
         val1.reduce((acc, val, i) => (Math.pow(val - val2[i], 2) + acc), 0)
-      )
+      );
     }
   }
 
@@ -120,14 +121,16 @@ export default class Closest {
 
     // if set to return every value in the list only once
     // and being out of entries in the list
-    if (this.unique && this.previouslyReturnedIndexes.length === this.list.length) {
+    if (
+      this.unique && this.previouslyReturnedIndexes.length === this.list.length
+    ) {
       return null;
     }
 
     for (let i = 0; i < this.list.length; i++) {
       // skip if set to unique and value was returned previously
       if (!(this.unique && this.previouslyReturnedIndexes.indexOf(i) > -1) ) {
-        let distance = this.diff(val, this.list[i]);
+        const distance = this.diff(val, this.list[i]);
         if (distance < minDistance) {
           minDistance = distance;
           index = i;
