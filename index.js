@@ -15,7 +15,7 @@ export default class Closest {
   constructor(list, unique) {
     // creates a copy of list
     this.list = Array.from(list);
-
+    this.kaka="pipi";
     this.dimensions = Closest.getDimensions(list[0]);
 
     this.unique = unique;
