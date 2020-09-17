@@ -1,3 +1,5 @@
+import uglify from 'rollup-plugin-uglify';
+
 export default {
   input: 'index.js',
   output: {
@@ -5,4 +7,7 @@ export default {
     format: 'umd',
     name: 'Closest',
   },
+  /*plugins: [
+    uglify.uglify(),
+  ],*/
 };

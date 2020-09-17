@@ -21,7 +21,7 @@
     constructor(list, unique) {
       // creates a copy of list
       this.list = Array.from(list);
-      this.kaka="pipi";
+
       this.dimensions = Closest.getDimensions(list[0]);
 
       this.unique = unique;
@@ -67,19 +67,21 @@
     static nDimensionalDiff(dimensions) {
       if (dimensions == 2) {
         return (val1, val2) => (
-          Math.pow(val1[0] - val2[0], 2) +
-          Math.pow(val1[1] - val2[1], 2)
+          (val1[0] - val2[0]) * (val1[0] - val2[0]) +
+          (val1[1] - val2[1]) * (val1[1] - val2[1])
         );
       } else if (dimensions == 3) {
         return (val1, val2) => (
-          Math.pow(val1[0] - val2[0], 2) +
-          Math.pow(val1[1] - val2[1], 2) +
-          Math.pow(val1[2] - val2[2], 2)
+          (val1[0] - val2[0]) * (val1[0] - val2[0]) +
+          (val1[1] - val2[1]) * (val1[1] - val2[1]) +
+          (val1[2] - val2[2]) * (val1[2] - val2[2])
         );
       } else {
         // elegant but slow solution
         return (val1, val2) => (
-          val1.reduce((acc, val, i) => (Math.pow(val - val2[i], 2) + acc), 0)
+          val1.reduce(
+              (acc, val, i) => ((val - val2[i]) * (val - val2[i]) + acc)
+              , 0)
         );
       }
     }

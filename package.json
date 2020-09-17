@@ -1,6 +1,6 @@
 {
   "name": "closestvector",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "returns the closest value / vector / vectorN from an array",
   "main": "index.umd.js",
   "es2015": "index.js",
@@ -35,7 +35,8 @@
     "eslint-config-google": "^0.12.0",
     "mocha": "^6.0.2",
     "rollup": "^1.16.2",
-    "semantic-release": "^15.13.18"
+    "semantic-release": "^15.13.18",
+    "rollup-plugin-uglify": "^6.0.4"
   },
   "standard": {
     "env": {

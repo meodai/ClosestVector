@@ -33,7 +33,7 @@
         height: 10rem;
       }
       .layout {
-        max-width: 40em;
+        max-width: 32em;
         margin: 0 auto;
         background: transparent;
       }
@@ -67,6 +67,10 @@
         border-radius: 50%;
         transform: translate(-50%,-50%);
       }
+      mark {
+        background: hotpink;
+        color: #fff;
+      }
       .dot--active {
         background: hotpink;
         transform: translate(-50%,-50%) scale(5);
@@ -87,17 +91,18 @@
         </a>
         <span>Closestᐁector</span>  
       </h1>
-      <p>Super fast lightweight and dependency free library to get closest Number / Vector / VectorN from an array with caching and stuff</p>
+      <p>Super fast lightweight and dependency free library to get closest Number / Point / Vector / VectorN from an array with caching and stuff</p>
       <section class="section">
         <h2 class="text-title text-title--section">Vector 2</h2>
         <p>
-            Move your mouse cursor to highlight one of <label><input class="js-dots2d-lenght" type="number" value="222" step="1" min="0" max="10000" /> dots</label>
+            Move your mouse cursor to highlight one of <label><input class="js-dots2d-lenght" type="number" value="666" step="100" min="0" max="10000" /> dots</label>
         </p>
+        <p>(took <mark class="time">0</mark> ms to find the last point)</p>
       </section>
       <section class="section">
         <h2 class="text-title text-title--section">Vector 3</h2>
         <p>
-          Find the closest color in a set of ~16k colors based on RGB coordinates
+          Find the closest color in a set of ~26k colors based on RGB coordinates
           <br/>
           <label>
             Reference color:
@@ -111,7 +116,8 @@
         <p>
           Snap to points between 1 and 100
           <label>
-            <input type="range" min="1" max="100" value="50" step="1" class="slider js-slider"></label>
+            <input type="range" min="1" max="100" value="50" step="1" class="slider js-slider">
+          </label>
         </p>
       </section-->
     </div>
@@ -169,10 +175,12 @@
         dotCanvasBox = $dotsCanvas.getBoundingClientRect();
       } 
 
+      const $timer = document.querySelector('.time');
+
       const dotsDemo = () => {
         // dots demo
         numberOfDots = parseInt(document.querySelector('.js-dots2d-lenght').value);
-        dots = new Array(Math.min(10000,numberOfDots)).fill([]).map(dot => ([Math.random(),Math.random()]));
+        dots = new Array(Math.min(10000, numberOfDots)).fill([]).map(dot => ([Math.random(),Math.random()]));
         closestDot = new Closest(dots);
          
         mesureCanvas();
@@ -202,8 +210,13 @@
             ctx.fillRect(0, 0, dotCanvasBox.width, dotCanvasBox.height);
             const x = (e.clientX - dotCanvasBox.left) / dotCanvasBox.width;
             const y = (e.clientY - dotCanvasBox.top) / dotCanvasBox.height;
+            const t0 = performance.now();
             const index = closestDot.get([x, y]).index;
+            const t1 = performance.now();
 
+            $timer.innerText = (Math.round((t1 - t0) * 1000) / 1000).toFixed(3);
+            console.log(`Call to closestDot.get([${x}, ${y}]) took ${t1 - t0} milliseconds.`);
+            
             dots.forEach((dot, i) => {
               ctx.beginPath();
 
@@ -248,10 +261,10 @@
             ctx.closePath();
             ctx.fill();
 
-            radGrad.addColorStop(0, "rgba(21,21,21,0)");
+            /*radGrad.addColorStop(0, "rgba(21,21,21,0)");
             radGrad.addColorStop(1, "#212121");
-            ctx.fillStyle = radGrad;
-            ctx.fillRect(0, 0, dotCanvasBox.width, dotCanvasBox.height);
+            ctx.fillStyle = radGrad;*/
+            //ctx.fillRect(0, 0, dotCanvasBox.width, dotCanvasBox.height);
           });
         });
       window.addEventListener('resize', dotsDemo);
