@@ -1,117 +1,170 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Closestᐁector - Demo Page</title>
-    <style>
-      @import url('https://rsms.me/inter/inter-ui.css');
 
-      html, body {
-        cursor: none;
-        font-family: 'Inter UI', sans-serif;
-        font-size: calc(.9rem + .3vw);
-        line-height: 1.45;
-        background: #212121;
-        color: #fff; 
-        text-align: center;
-        margin: 0; padding: 0;
-      }
-      body {
-        display: flex;
-        background: transparent;
-        pointer-events: none;
-        justify-content: space-around;
-        align-items: center;
-        min-height: 100vh;
-      }
-      input, a, label {
-        pointer-events: auto;
-        cursor: pointer;
-      }
-      .logo {
-        width: 10rem;
-        height: 10rem;
-      }
-      .layout {
-        max-width: 32em;
-        margin: 0 auto;
-        background: transparent;
-      }
-      .text-title,
-      .color-name {
-        font-weight: normal;
-      }
-      .text-title span {
-        display: block;
-      }
-      .text-lead {
+<head>
+  <meta charset="UTF-8">
+  <title>Closestᐁector - Demo Page</title>
+  <style>
+    @import url('https://rsms.me/inter/inter-ui.css');
 
-      }
-      .canvas {
-        pointer-events: auto;
-        z-index: -1;
-        position: fixed;
-        display: block;
-        width: 100vw;
-        height: 100vw;
+    html,
+    body {
+      cursor: none;
+      font-family: 'Inter UI', sans-serif;
+      font-size: calc(.9rem + .3vw);
+      line-height: 1.45;
+      background: #212121;
+      color: #fff;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
 
-        line-height: 0;
-        transform: translate(-50%, -50%);
-        left: 50%;
-        top: 50%;
-      }
-      .dot {
-        position: absolute;
-        width: 3px; height: 3px;
-        background: #212121;
-        border-radius: 50%;
-        transform: translate(-50%,-50%);
-      }
-      mark {
-        background: hotpink;
-        color: #fff;
-      }
-      .dot--active {
-        background: hotpink;
-        transform: translate(-50%,-50%) scale(5);
-      }
-      .color-swatch {
-        display: inline-block;
-        width: 1em; height: 1em;
-        border-radius: 100%;
-      }
+    body {
+      display: flex;
+      background: transparent;
+      pointer-events: none;
+      justify-content: space-around;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-    </style>
-  </head>
-  <body>
-    <div class="layout">
-      <h1 class="text-title">
-        <a href="https://github.com/meodai/ClosestVector">
-          <svg class="logo" xmlns="http://www.w3.org/2000/svg" width="345.25" height="331.53" viewBox="0 0 345.25 331.53"><defs><style>.cls-1{fill:#160017}.cls-2{fill:url(#linear-gradient)}.cls-3{fill:#fff}</style><linearGradient id="linear-gradient" x1="71.76" y1="57.76" x2="209.2" y2="360.27" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f0f"/><stop offset="1" stop-color="#0ff"/></linearGradient></defs><title>closestvector</title><circle class="cls-1" cx="167.62" cy="189.53" r="142"/><path class="cls-2" d="M14.06 288.57L176.62 7l162.57 281.57H14.06z"/><path d="M203.25 49.13l156.5 271.07h-313l156.5-271.07m0-14l-6.06 10.5-156.5 271.06-6.06 10.5h337.24l-6.06-10.5-156.5-271.06-6.06-10.5z" transform="translate(-26.63 -35.13)"/><path class="cls-3" d="M172.65 20.89l148.47 257.18H24.17l-4.05 7h313L176.62 14l-3.97 6.89zM12.12 285.07L168.62 14l3.98 6.89 1.96-3.39 2.09-3.61-1.96-3.39L168.62 0l-6.06 10.5L6.06 281.57 0 292.07l12.12-7z"/><path class="cls-3" d="M295.79 274.41a10.79 10.79 0 1 1-10.79 10.8 10.79 10.79 0 0 1 10.79-10.79m0-5a15.79 15.79 0 1 0 15.79 15.79 15.81 15.81 0 0 0-15.79-15.79z" transform="translate(-26.63 -35.13)"/></svg>
-        </a>
-        <span>Closestᐁector</span>  
-      </h1>
-      <p>Super fast lightweight and dependency free library to get closest Number / Point / Vector / VectorN from an array with caching and stuff</p>
-      <section class="section">
-        <h2 class="text-title text-title--section">Vector 2</h2>
-        <p>
-            Move your mouse cursor to highlight one of <label><input class="js-dots2d-lenght" type="number" value="666" step="100" min="0" max="10000" /> dots</label>
-        </p>
-        <p>(took <mark class="time">0</mark> ms to find the last point)</p>
-      </section>
-      <section class="section">
-        <h2 class="text-title text-title--section">Vector 3</h2>
-        <p>
-          Find the closest color in a set of ~26k colors based on RGB coordinates
-          <br/>
-          <label>
-            Reference color:
-            <input name="color" type="color" value="#ff00ff" class="color js-color" />
-            <h3 class="color-name js-color-name"><span class="color-swatch"></span></h3>
-          </label>
-        </p>
-      </section>
-      <!--section class="section">
+    input,
+    a,
+    label {
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    .logo {
+      width: 10rem;
+      height: 10rem;
+    }
+
+    .layout {
+      max-width: 32em;
+      margin: 0 auto;
+      background: transparent;
+    }
+
+    .text-title,
+    .color-name {
+      font-weight: normal;
+    }
+
+    .text-title span {
+      display: block;
+    }
+
+    .text-lead {}
+
+    .canvas {
+      pointer-events: auto;
+      z-index: -1;
+      position: fixed;
+      display: block;
+      width: 100vw;
+      height: 100vw;
+
+      line-height: 0;
+      transform: translate(-50%, -50%);
+      left: 50%;
+      top: 50%;
+    }
+
+    .dot {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: #212121;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    mark {
+      background: hotpink;
+      color: #fff;
+    }
+
+    .dot--active {
+      background: hotpink;
+      transform: translate(-50%, -50%) scale(5);
+    }
+
+    .color-swatch {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      border-radius: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layout">
+    <h1 class="text-title">
+      <a href="https://github.com/meodai/ClosestVector">
+        <svg class="logo" xmlns="http://www.w3.org/2000/svg" width="345.25" height="331.53" viewBox="0 0 345.25 331.53">
+          <defs>
+            <style>
+              .cls-1 {
+                fill: #160017
+              }
+
+              .cls-2 {
+                fill: url(#linear-gradient)
+              }
+
+              .cls-3 {
+                fill: #fff
+              }
+            </style>
+            <linearGradient id="linear-gradient" x1="71.76" y1="57.76" x2="209.2" y2="360.27"
+              gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#f0f" />
+              <stop offset="1" stop-color="#0ff" />
+            </linearGradient>
+          </defs>
+          <title>closestvector</title>
+          <circle class="cls-1" cx="167.62" cy="189.53" r="142" />
+          <path class="cls-2" d="M14.06 288.57L176.62 7l162.57 281.57H14.06z" />
+          <path
+            d="M203.25 49.13l156.5 271.07h-313l156.5-271.07m0-14l-6.06 10.5-156.5 271.06-6.06 10.5h337.24l-6.06-10.5-156.5-271.06-6.06-10.5z"
+            transform="translate(-26.63 -35.13)" />
+          <path class="cls-3"
+            d="M172.65 20.89l148.47 257.18H24.17l-4.05 7h313L176.62 14l-3.97 6.89zM12.12 285.07L168.62 14l3.98 6.89 1.96-3.39 2.09-3.61-1.96-3.39L168.62 0l-6.06 10.5L6.06 281.57 0 292.07l12.12-7z" />
+          <path class="cls-3"
+            d="M295.79 274.41a10.79 10.79 0 1 1-10.79 10.8 10.79 10.79 0 0 1 10.79-10.79m0-5a15.79 15.79 0 1 0 15.79 15.79 15.81 15.81 0 0 0-15.79-15.79z"
+            transform="translate(-26.63 -35.13)" />
+        </svg>
+      </a>
+      <span>Closestᐁector</span>
+    </h1>
+    <p>Super fast lightweight and dependency free library to get closest Number / Point / Vector / VectorN from an array
+      with caching and stuff</p>
+    <section class="section">
+      <h2 class="text-title text-title--section">Vector 2</h2>
+      <p>
+        Move your mouse cursor to highlight one of <label><input class="js-dots2d-lenght" type="number" value="666"
+            step="100" min="0" max="100000" /> dots</label>
+      </p>
+      <p>(it took <mark class="time">0</mark> ms to find the last point)</p>
+    </section>
+    <section class="section">
+      <h2 class="text-title text-title--section">Vector 3</h2>
+      <p>
+        Find the closest color in a set of ~26k colors based on RGB coordinates
+        <br />
+        <label>
+          Reference color:
+          <input name="color" type="color" value="#ff00ff" class="color js-color" />
+          <h3 class="color-name js-color-name"><span class="color-swatch"></span></h3>
+          <p>(it took <mark class="time2">0</mark> ms to find the closest color in <mark class="colorlenght"></mark> RGB
+            values)</p>
+        </label>
+      </p>
+    </section>
+    <!--section class="section">
         <h2 class="text-title text-title--section">Number Demo</h2>
         <p>
           Snap to points between 1 and 100
@@ -120,197 +173,212 @@
           </label>
         </p>
       </section-->
-    </div>
-    <canvas class="canvas js-dots2d"></canvas>
-    <a href="https://github.com/meodai/ClosestVector" class="github-corner" aria-label="View source on Github">
-      <svg width="80" height="80" viewBox="0 0 250 250" style="fill:#fff; color:#151513; position: absolute; top: 0; border: 0; right: 0;"
-        aria-hidden="true">
-        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
-        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
-          fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
-        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
-          fill="currentColor" class="octo-body"></path>
-      </svg>
-    </a>
-    <style>
+  </div>
+  <canvas class="canvas js-dots2d"></canvas>
+  <a href="https://github.com/meodai/ClosestVector" class="github-corner" aria-label="View source on Github">
+    <svg width="80" height="80" viewBox="0 0 250 250"
+      style="fill:#fff; color:#151513; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
+      <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+      <path
+        d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+        fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+      <path
+        d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+        fill="currentColor" class="octo-body"></path>
+    </svg>
+  </a>
+  <style>
+    .github-corner:hover .octo-arm {
+      animation: octocat-wave 560ms ease-in-out
+    }
+
+    @keyframes octocat-wave {
+
+      0%,
+      100% {
+        transform: rotate(0)
+      }
+
+      20%,
+      60% {
+        transform: rotate(-25deg)
+      }
+
+      40%,
+      80% {
+        transform: rotate(10deg)
+      }
+    }
+
+    @media (max-width:500px) {
       .github-corner:hover .octo-arm {
+        animation: none
+      }
+
+      .github-corner .octo-arm {
         animation: octocat-wave 560ms ease-in-out
       }
-    
-      @keyframes octocat-wave {
-        0%,
-        100% {
-          transform: rotate(0)
-        }
-        20%,
-        60% {
-          transform: rotate(-25deg)
-        }
-        40%,
-        80% {
-          transform: rotate(10deg)
-        }
-      }
-    
-      @media (max-width:500px) {
-        .github-corner:hover .octo-arm {
-          animation: none
-        }
-        .github-corner .octo-arm {
-          animation: octocat-wave 560ms ease-in-out
-        }
-      }
-    </style>
-    <script src="index.umd.js"></script>
-    <script>
-      
-      let numberOfDots, dots, closestDot;
-      const $dotsCanvas = document.querySelector('.js-dots2d');
-      let ctx = $dotsCanvas.getContext('2d');
-        
-      let dotCanvasBox;
-      
+    }
+  </style>
+  <script src="index.umd.js"></script>
+  <script>
 
-      const mesureCanvas = () => {
-        dotCanvasBox = $dotsCanvas.getBoundingClientRect();
-      } 
+    let numberOfDots, dots, closestDot;
+    const $dotsCanvas = document.querySelector('.js-dots2d');
+    let ctx = $dotsCanvas.getContext('2d');
 
-      const $timer = document.querySelector('.time');
+    let dotCanvasBox;
 
-      const dotsDemo = () => {
-        // dots demo
-        numberOfDots = parseInt(document.querySelector('.js-dots2d-lenght').value);
-        dots = new Array(Math.min(10000, numberOfDots)).fill([]).map(dot => ([Math.random(),Math.random()]));
-        closestDot = new Closest(dots);
-         
-        mesureCanvas();
 
+    const mesureCanvas = () => {
+      dotCanvasBox = $dotsCanvas.getBoundingClientRect();
+    }
+
+    const $timer = document.querySelector('.time');
+    const $timer2 = document.querySelector('.time2')
+
+    const dotsDemo = () => {
+      // dots demo
+      numberOfDots = parseInt(document.querySelector('.js-dots2d-lenght').value);
+      dots = new Array(Math.min(100000, numberOfDots)).fill([]).map(dot => ([Math.random(), Math.random()]));
+      closestDot = new Closest(dots);
+
+      mesureCanvas();
+
+      ctx.fillStyle = '#212121';
+      ctx.fillRect(0, 0, dotCanvasBox.width, dotCanvasBox.height);
+
+      dots.forEach(dot => {
+        ctx.beginPath();
+        ctx.fillStyle = '#fff';
+        ctx.arc(dot[0] * dotCanvasBox.width, dot[1] * dotCanvasBox.height, 3, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.closePath();
+      });
+    }
+
+    dotsDemo();
+
+    window.addEventListener('scroll', mesureCanvas);
+    $dotsCanvas.setAttribute('width', dotCanvasBox.width);
+    $dotsCanvas.setAttribute('height', dotCanvasBox.height);
+    let rafid;
+    $dotsCanvas.addEventListener('mousemove', e => {
+      cancelAnimationFrame(rafid);
+      rxafid = requestAnimationFrame(() => {
         ctx.fillStyle = '#212121';
         ctx.fillRect(0, 0, dotCanvasBox.width, dotCanvasBox.height);
-        
-        dots.forEach(dot => {
+        const x = (e.clientX - dotCanvasBox.left) / dotCanvasBox.width;
+        const y = (e.clientY - dotCanvasBox.top) / dotCanvasBox.height;
+        const t0 = performance.now();
+        const index = closestDot.get([x, y]).index;
+        const t1 = performance.now();
+
+        $timer.innerText = (Math.round((t1 - t0) * 1000) / 1000).toFixed(3);
+        console.log(`Call to closestDot.get([${x}, ${y}]) took ${t1 - t0} milliseconds.`);
+
+        dots.forEach((dot, i) => {
           ctx.beginPath();
-          ctx.fillStyle = '#fff';
-          ctx.arc(dot[0] * dotCanvasBox.width, dot[1] * dotCanvasBox.height, 3, 0, 2*Math.PI);
-          ctx.fill();
+
+          ctx.setLineDash([]);
+          //ctx.fillStyle = i === index ? '#f0f' : '#fff';
+          //ctx.arc(dot[0] * dotCanvasBox.width, dot[1] * dotCanvasBox.height, i === index ? 6 : 3, 0, 2*Math.PI);
+          let centerY = dot[0] * dotCanvasBox.width;
+          let centerX = dot[1] * dotCanvasBox.height;
+          let rad = i === index ? 5 : 3;
+          ctx.strokeStyle = i === index ? '#f0f' : '#fff';
+          ctx.moveTo(centerY - rad, centerX - rad);
+          ctx.lineTo(centerY + rad, centerX + rad);
+          ctx.moveTo(centerY + rad, centerX - rad);
+          ctx.lineTo(centerY - rad, centerX + rad);
+          ctx.stroke();
+          //ctx.fill()
+          ctx.closePath();
+
+          ctx.beginPath();
+          ctx.setLineDash([1, 3]);
+          ctx.strokeStyle = '#f0f';
+          ctx.moveTo(e.clientX - dotCanvasBox.left, e.clientY - dotCanvasBox.top);
+          ctx.lineTo(dots[index][0] * dotCanvasBox.width, dots[index][1] * dotCanvasBox.height);
+          ctx.stroke();
           ctx.closePath();
         });
-      }
 
-      dotsDemo();
+        const radGrad = ctx.createRadialGradient(
+          dotCanvasBox.width * .5, dotCanvasBox.height * .5, dotCanvasBox.height * .2,
+          dotCanvasBox.width * .5, dotCanvasBox.height * .5, dotCanvasBox.width * .5
+        );
 
-      window.addEventListener('scroll', mesureCanvas);
-      $dotsCanvas.setAttribute('width', dotCanvasBox.width);
-      $dotsCanvas.setAttribute('height', dotCanvasBox.height);
-      let rafid;
-      $dotsCanvas.addEventListener('mousemove', e => {
-          cancelAnimationFrame(rafid);
-          rxafid = requestAnimationFrame(() => {
-            ctx.fillStyle = '#212121';
-            ctx.fillRect(0, 0, dotCanvasBox.width, dotCanvasBox.height);
-            const x = (e.clientX - dotCanvasBox.left) / dotCanvasBox.width;
-            const y = (e.clientY - dotCanvasBox.top) / dotCanvasBox.height;
-            const t0 = performance.now();
-            const index = closestDot.get([x, y]).index;
-            const t1 = performance.now();
+        ctx.fillStyle = '#f0f';
+        ctx.beginPath();
+        ctx.arc((e.clientX - dotCanvasBox.left), (e.clientY - dotCanvasBox.top), 6, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.fill();
 
-            $timer.innerText = (Math.round((t1 - t0) * 1000) / 1000).toFixed(3);
-            console.log(`Call to closestDot.get([${x}, ${y}]) took ${t1 - t0} milliseconds.`);
-            
-            dots.forEach((dot, i) => {
-              ctx.beginPath();
+        ctx.fillStyle = '#fff';
+        ctx.beginPath();
+        ctx.arc((e.clientX - dotCanvasBox.left), (e.clientY - dotCanvasBox.top), 2, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.fill();
 
-              ctx.setLineDash([]);
-              //ctx.fillStyle = i === index ? '#f0f' : '#fff';
-              //ctx.arc(dot[0] * dotCanvasBox.width, dot[1] * dotCanvasBox.height, i === index ? 6 : 3, 0, 2*Math.PI);
-              let centerY = dot[0] * dotCanvasBox.width;
-              let centerX = dot[1] * dotCanvasBox.height;
-              let rad = i === index ? 5 : 3;
-              ctx.strokeStyle=i === index ? '#f0f' : '#fff';
-              ctx.moveTo(centerY - rad, centerX - rad);
-              ctx.lineTo(centerY + rad, centerX + rad);
-              ctx.moveTo(centerY + rad, centerX - rad);
-              ctx.lineTo(centerY - rad, centerX + rad);
-              ctx.stroke();
-              //ctx.fill()
-              ctx.closePath();
+        /*radGrad.addColorStop(0, "rgba(21,21,21,0)");
+        radGrad.addColorStop(1, "#212121");
+        ctx.fillStyle = radGrad;*/
+        //ctx.fillRect(0, 0, dotCanvasBox.width, dotCanvasBox.height);
+      });
+    });
+    window.addEventListener('resize', dotsDemo);
+    document.querySelector('.js-dots2d-lenght').addEventListener('input', dotsDemo);
 
-              ctx.beginPath();
-              ctx.setLineDash([1, 3]);
-              ctx.strokeStyle='#f0f';
-              ctx.moveTo(e.clientX - dotCanvasBox.left, e.clientY - dotCanvasBox.top);
-              ctx.lineTo(dots[index][0] * dotCanvasBox.width, dots[index][1] * dotCanvasBox.height);
-              ctx.stroke();
-              ctx.closePath();
-            });
+    // color demo
+    const $colorName = document.querySelector('.js-color-name');
 
-            const radGrad = ctx.createRadialGradient(
-              dotCanvasBox.width * .5, dotCanvasBox.height * .5, dotCanvasBox.height * .2, 
-              dotCanvasBox.width * .5, dotCanvasBox.height * .5, dotCanvasBox.width * .5
-            );
+    function hexToRgb(hex) {
+      // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+      const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+      hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+        return r + r + g + g + b + b;
+      });
 
-            ctx.fillStyle = '#f0f';
-            ctx.beginPath();
-            ctx.arc((e.clientX - dotCanvasBox.left), (e.clientY - dotCanvasBox.top), 6, 0, 2 * Math.PI);
-            ctx.closePath();
-            ctx.fill();
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : null;
+    }
 
-            ctx.fillStyle = '#fff';
-            ctx.beginPath();
-            ctx.arc((e.clientX - dotCanvasBox.left), (e.clientY - dotCanvasBox.top), 2, 0, 2 * Math.PI);
-            ctx.closePath();
-            ctx.fill();
-
-            /*radGrad.addColorStop(0, "rgba(21,21,21,0)");
-            radGrad.addColorStop(1, "#212121");
-            ctx.fillStyle = radGrad;*/
-            //ctx.fillRect(0, 0, dotCanvasBox.width, dotCanvasBox.height);
-          });
+    const $colorPicker = document.querySelector('.js-color');
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://unpkg.com/color-name-list/dist/colornames.json');
+    xhr.onload = e => {
+      if (xhr.status === 200) {
+        const colorNames = JSON.parse(xhr.responseText);
+        const colorValues = colorNames.map(col => {
+          const rgb = hexToRgb(col.hex);
+          return [rgb.r, rgb.g, rgb.b];
         });
-      window.addEventListener('resize', dotsDemo);
-      document.querySelector('.js-dots2d-lenght').addEventListener('input', dotsDemo);
+        document.querySelector('.colorlenght').innerText = colorValues.length;
+        const colors = new Closest(colorValues);
 
-      // color demo
-      const $colorName = document.querySelector('.js-color-name');
+        $colorPicker.addEventListener('input', (e) => {
+          const rgb = hexToRgb($colorPicker.value);
+          const t0 = performance.now();
+          const index = colors.get([rgb.r, rgb.g, rgb.b]).index;
+          const t1 = performance.now();
 
-      function hexToRgb(hex) {
-        // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-        const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-        hex = hex.replace(shorthandRegex, function (m, r, g, b) {
-          return r + r + g + g + b + b;
+          $timer2.innerText = (Math.round((t1 - t0) * 1000) / 1000).toFixed(3);
+
+          const colorName = colorNames[index];
+          $colorName.innerHTML = `${colorName.name} <span  class="color-swatch" style="background-color:${colorName.hex}"></span>`;
         });
 
-        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-        return result ? {
-          r: parseInt(result[1], 16),
-          g: parseInt(result[2], 16),
-          b: parseInt(result[3], 16)
-        } : null;
+      } else {
+        console.log(xhr.status);
       }
+    };
+    xhr.send();
+  </script>
+</body>
 
-      const $colorPicker = document.querySelector('.js-color');
-      const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'https://unpkg.com/color-name-list/dist/colornames.json');
-        xhr.onload = e => {
-          if (xhr.status === 200) {
-            const colorNames = JSON.parse(xhr.responseText);
-            const colorValues = colorNames.map(col => {
-              const rgb = hexToRgb(col.hex);
-              return [rgb.r, rgb.g, rgb.b];
-            });
-            const colors = new Closest(colorValues);
-
-            $colorPicker.addEventListener('input', (e) => {
-              const rgb = hexToRgb($colorPicker.value);
-              const colorName = colorNames[colors.get([rgb.r, rgb.g, rgb.b]).index];
-              $colorName.innerHTML = `${colorName.name} <span  class="color-swatch" style="background-color:${colorName.hex}"></span>`;
-            });
-
-          } else {
-            console.log(xhr.status);
-          }
-        };
-        xhr.send();
-    </script>
-  </body>
 </html>
