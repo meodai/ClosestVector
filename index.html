@@ -39,6 +39,7 @@
     .logo {
       width: 10rem;
       height: 10rem;
+      margin-top: 1rem;
     }
 
     .layout {
@@ -84,6 +85,7 @@
     mark {
       background: hotpink;
       color: #fff;
+      font-family: monospace;
     }
 
     .dot--active {
@@ -148,19 +150,19 @@
         Move your mouse cursor to highlight one of <label><input class="js-dots2d-lenght" type="number" value="666"
             step="100" min="0" max="100000" /> dots</label>
       </p>
-      <p>(it took <mark class="time">0</mark> ms to find the last point)</p>
+      <small>(it took <mark class="time">0</mark> ms to find the last point)</small>
     </section>
     <section class="section">
       <h2 class="text-title text-title--section">Vector 3</h2>
       <p>
-        Find the closest color in a set of ~26k colors based on RGB coordinates
+        Find the closest color-name in a set of <a href="https://github.com/meodai/color-names">~26k colors/name pairs</a> based on RGB coordinates.
         <br />
         <label>
           Reference color:
           <input name="color" type="color" value="#ff00ff" class="color js-color" />
           <h3 class="color-name js-color-name"><span class="color-swatch"></span></h3>
-          <p>(it took <mark class="time2">0</mark> ms to find the closest color in <mark class="colorlenght"></mark> RGB
-            values)</p>
+          <small>(it took <mark class="time2">0</mark> ms to find the closest color in <mark class="colorlenght"></mark> RGB
+            values)</small>
         </label>
       </p>
     </section>
@@ -173,6 +175,7 @@
           </label>
         </p>
       </section-->
+  <footer><small>A thing made by <a href="https://github.com/meodai/">meodai</a>.</small></footer>
   </div>
   <canvas class="canvas js-dots2d"></canvas>
   <a href="https://github.com/meodai/ClosestVector" class="github-corner" aria-label="View source on Github">
@@ -192,8 +195,15 @@
       animation: octocat-wave 560ms ease-in-out
     }
 
-    @keyframes octocat-wave {
+    a {
+      color: hotpink;
+    }
 
+    footer {
+      padding-bottom:  2rem;
+    }
+
+    @keyframes octocat-wave {
       0%,
       100% {
         transform: rotate(0)
@@ -274,7 +284,7 @@
         const index = closestDot.get([x, y]).index;
         const t1 = performance.now();
 
-        $timer.innerText = (Math.round((t1 - t0) * 1000) / 1000).toFixed(3);
+        $timer.innerText = (t1 - t0).toFixed(3);
         console.log(`Call to closestDot.get([${x}, ${y}]) took ${t1 - t0} milliseconds.`);
 
         dots.forEach((dot, i) => {
@@ -367,7 +377,7 @@
           const index = colors.get([rgb.r, rgb.g, rgb.b]).index;
           const t1 = performance.now();
 
-          $timer2.innerText = (Math.round((t1 - t0) * 1000) / 1000).toFixed(3);
+          $timer2.innerText = (t1 - t0).toFixed(3);
 
           const colorName = colorNames[index];
           $colorName.innerHTML = `${colorName.name} <span  class="color-swatch" style="background-color:${colorName.hex}"></span>`;
