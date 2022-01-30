@@ -12,16 +12,16 @@ Get closest Number / Point / Vector / VectorN from an array and caches the previ
 ```javascript
 const Closest = require('closestvector');
 const closest = new Closest([[255,0,0], [0,255,0], [0,0,255], [0,0,0]]);
-closest.get([200,130,213]) // => [255,0,0]
+closest.get([200,130,213]) // => [0,0,255]
 ```
 
 **if you wish to return every value only once:**
 ```javascript
 const closest = new Closest([[255,0,0], [0,255,0], [0,0,255], [0,0,0]], true);
-closest.get([200,130,213]) // => [255,0,0] closest Vector
-closest.get([200,130,213]) // => [0,0,255] next closest Vector
+closest.get([200,130,213]) // => [0,0,255] closest Vector
+closest.get([200,130,213]) // => [255,0,0] next closest Vector
 closest.clearCache() // resets the returned elements
-closest.get([200,130,213]) // => [255,0,0] closest Vector
+closest.get([200,130,213]) // => [0,0,255] closest Vector
 ``` 
 
 ## Examples
